@@ -42,7 +42,7 @@ header{
 .hamburger.active div:nth-child(2){opacity:0;}
 .hamburger.active div:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
 
-/* Side menu con efecto gradiente */
+/* Side menu */
 .side-menu{
   position:fixed; top:0; left:-280px; width:260px; height:100%;
   background: rgba(255, 255, 255, 0.8);
@@ -57,18 +57,14 @@ header{
 .side-menu a {
   display:block; font-weight:600; font-size:0.95rem; text-decoration:none;
   color:var(--text-primary); padding:10px 15px; border-radius:8px;
-  background: linear-gradient(90deg,#ffffff,#ffffff); /* fondo inicial blanco */
+  background: linear-gradient(90deg,#ffffff,#ffffff);
   transition:0.3s, transform 0.2s, background 0.3s;
 }
-
-/* Hover */
 .side-menu a:hover{
   background: var(--btn-bg);
   color:white;
   transform: scale(1.02);
 }
-
-/* Opción activa */
 .side-menu a.active {
   background: var(--btn-bg);
   color:white;
@@ -99,10 +95,19 @@ header{
 }
 .cover button:hover { transform: scale(1.05); }
 
-/* FORMULARIO CON BORDE ANIMADO */
+/* FORMULARIO REGISTRO CENTRADO */
+#registro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 80vh;
+  padding: 50px 20px;
+}
+
 .form-container{
   background:var(--bg-light); padding:50px 30px; border-radius:18px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.1); max-width:540px; margin:50px auto; text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.1); max-width:400px; width:100%; text-align:center;
   border:3px solid; border-image-slice:1;
   border-width:3px;
   border-image-source: linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));
@@ -175,7 +180,7 @@ function toggleMenu(){
   document.querySelector('.hamburger').classList.toggle('active');
 }
 
-// Efecto activo en menú al hacer clic
+// Menú activo
 const menuLinks = document.querySelectorAll('.side-menu a');
 menuLinks.forEach(link => {
     link.addEventListener('click', () => {
@@ -185,6 +190,7 @@ menuLinks.forEach(link => {
     });
 });
 
+// Registro usuario
 function registrar(){
   const n=document.getElementById("nombre").value;
   const e=document.getElementById("email").value;
