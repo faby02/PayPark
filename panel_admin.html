@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayPark - Panel Administrador</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --text-primary: #111827;
+  --accent: #066462;
+  --accent2: #3AC2BF;
+  --bg-light: #FAFAFA;
+  --btn-bg: linear-gradient(90deg,#248786,#0e2425);
+}
+
+/* Base */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Inter', sans-serif; color: var(--text-primary); background: var(--bg-light); overflow-x:hidden; transition:0.3s; }
+body.dark-theme { background:#111827; color:white; }
+
+/* HEADER */
+header{
+  position: fixed;
+  top:0; width:100%; padding:20px 50px;
+  display:flex; align-items:center; justify-content:flex-start;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  box-shadow:0 3px 15px rgba(0,0,0,0.1); z-index:100;
+  border-radius: 0 0 20px 20px;
+}
+
+/* HAMBURGUESA */
+.hamburger{
+  font-size:30px; cursor:pointer; display:flex; flex-direction:column; justify-content:space-around; width:28px; height:22px; margin-right:20px;
+}
+.hamburger div{ height:3px; background:var(--text-primary); border-radius:2px; transition:0.3s; }
+.hamburger.active div:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.active div:nth-child(2){opacity:0;}
+.hamburger.active div:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+/* Side menu con efecto gradiente */
+.side-menu{
+  position:fixed; top:0; left:-260px; width:260px; height:100%;
+  background: rgba(255, 255, 255, 0.8);
+  padding:40px;
+  transition:0.3s; box-shadow:2px 0 15px rgba(0,0,0,0.2); z-index:200;
+  display:flex; flex-direction:column; gap:12px;
+  backdrop-filter: blur(10px);
+  border-radius: 0 20px 20px 0;
+}
+.side-menu.show { left:0; }
+
+/* Botones del menú */
+.side-menu a {
+  display:block; font-weight:600; font-size:0.95rem; text-decoration:none;
+  color:var(--text-primary); padding:10px 15px; border-radius:8px;
+  background: linear-gradient(90deg,#ffffff,#ffffff); /* fondo blanco */
+  transition:0.3s, transform 0.2s, background 0.3s;
+}
+
+/* Hover */
+.side-menu a:hover{
+  background: var(--btn-bg);
+  color:white;
+  transform: scale(1.02);
+}
+
+/* Activo */
+.side-menu a.active {
+  background: var(--btn-bg);
+  color:white;
+  border-left:4px solid var(--accent);
+  border-radius:8px;
+}
+
+/* Botón modo oscuro */
+#themeToggle { position:fixed; top:15px; right:15px; font-size:25px; cursor:pointer; z-index:101; }
+
+/* MAIN PANEL */
+main{
+  padding:100px 20px 50px 20px;
+  display:flex;
+  justify-content:center;
+}
+.panel{
+  background: linear-gradient(180deg,#ffffff,#f3f4f6);
+  padding:40px 30px;
+  border-radius:25px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.2);
+  width:100%;
+  max-width:400px;
+  text-align:center;
+  transition:0.3s;
+  border:3px solid;
+  border-image-slice:1;
+  border-width:3px;
+  border-image-source: linear-gradient(90deg,var(--accent),var(--accent2));
+  animation: borderAnim 5s linear infinite;
+}
+@keyframes borderAnim{
+  0%{ border-image-source: linear-gradient(90deg,var(--accent),var(--accent2)); }
+  50%{ border-image-source: linear-gradient(90deg,var(--accent2),var(--accent)); }
+  100%{ border-image-source: linear-gradient(90deg,var(--accent),var(--accent2)); }
+}
+.panel h2{
+  margin-bottom:15px;
+  font-family:'Playfair Display', serif;
+  font-size:2rem;
+  color:var(--accent);
+}
+.panel p{
+  margin-bottom:15px;
+  line-height:1.6;
+}
+
+/* Botones principales panel */
+.btn{
+  padding:12px 20px;
+  margin:10px auto;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+  width:180px; /* ancho fijo más pequeño */
+  display:block;
+  border:none;
+  background: var(--btn-bg);
+  color:white;
+  transition:0.3s;
+}
+.btn:hover{transform:scale(1.05);}
+</style>
+</head>
+<body>
+
+<!-- MENÚ LATERAL -->
+<div class="side-menu" id="sideMenu">
+  <div class="close-btn" onclick="toggleMenu()">✖</div>
+  <a href="#">Gestión de Tarifas</a>
+  <a href="#">Generar Ticket</a>
+  <a href="#">Historial de Pagos</a>
+  <a href="#">Reportes</a>
+  <a href="#">Control de Actividad</a>
+  <a href="#">Perfil</a>
+  <a href="index.html">Cerrar Sesión</a>
+</div>
+
+<header>
+  <div class="hamburger" onclick="toggleMenu()"><div></div><div></div><div></div></div>
+</header>
+
+<div id="themeToggle">🌙</div>
+
+<main>
+  <div class="panel">
+    <h2>Panel Administrador</h2>
+    <p></p>
+    <p>Desde aquí puedes gestionar tarifas, generar tickets, revisar pagos, controlar actividad y acceder al perfil.</p>
+    <button class="btn" onclick="alert('Funcionalidad de ejemplo')">Gestionar Usuarios</button>
+    <button class="btn" onclick="alert('Funcionalidad de ejemplo')">Ver Reportes</button>
+  </div>
+</main>
+
+<script>
+function toggleMenu(){
+  const menu = document.getElementById("sideMenu");
+  menu.classList.toggle("show");
+  document.querySelector('.hamburger').classList.toggle('active');
+}
+
+// Efecto activo en menú al hacer clic
+const menuLinks = document.querySelectorAll('.side-menu a');
+menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        menuLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        toggleMenu();
+    });
+});
+
+// Modo oscuro
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark-theme");
+  themeToggle.textContent = document.body.classList.contains("dark-theme") ? "☀️" : "🌙";
+});
+</script>
+
+</body>
+</html>

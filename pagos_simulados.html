@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayPark - Panel de Usuario</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --text-primary:#111827;
+  --accent:#066462;
+  --bg-light:#FAFAFA;
+  --bg-white:#FFFFFF;
+  --btn-bg:linear-gradient(90deg,#248786,#0e2425);
+}
+
+/* Base */
+*{margin:0; padding:0; box-sizing:border-box;}
+body{font-family:'Inter',sans-serif; background:var(--bg-light); color:var(--text-primary); overflow-x:hidden; transition:0.3s;}
+body.dark-theme{background:#111827;color:white;}
+
+/* HEADER */
+header{
+  position:fixed; top:0; width:100%;
+  padding:20px 50px;
+  display:flex; justify-content:flex-start; align-items:center;
+  background:var(--bg-white); box-shadow:0 3px 15px rgba(0,0,0,0.1); z-index:100;
+}
+
+/* HAMBURGUESA */
+.hamburger{
+  font-size:30px;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
+  width:28px;
+  height:22px;
+  margin-right:20px;
+}
+.hamburger div{height:3px;background:var(--text-primary);border-radius:2px; transition:0.3s;}
+.hamburger.active div:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.active div:nth-child(2){opacity:0;}
+.hamburger.active div:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+/* LOGO */
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700; color:var(--accent);}
+
+/* MENÚ LATERAL */
+.side-menu{
+  position:fixed; top:0; left:-280px; width:260px; height:100%;
+  background:var(--bg-white); padding:40px;
+  transition:0.3s; box-shadow:2px 0 10px rgba(0,0,0,0.2); z-index:200;
+  display:flex; flex-direction:column; gap:15px;
+}
+.side-menu.show{left:0;}
+.side-menu a{
+  display:block; font-weight:600; font-size:1rem; text-decoration:none; color:var(--text-primary);
+  padding:10px 15px; border-radius:8px; transition:0.3s, background 0.3s, transform 0.2s;
+}
+.side-menu a:hover{color:var(--accent); transform: scale(1.02);}
+.side-menu a.active{
+  background-color:#066462;
+  color:white;
+  border-left:4px solid #066462;
+  border-radius:8px;
+  transition: background 0.3s, transform 0.2s;
+}
+.side-menu .close-btn{position:absolute; top:20px; right:20px; font-size:28px; cursor:pointer; color:var(--text-primary);}
+
+/* BOTÓN MODO OSCURO */
+#themeToggle{position:fixed; top:15px; right:15px; font-size:25px; cursor:pointer; z-index:101;}
+
+/* PANEL */
+main{padding:120px 20px 50px; display:flex; justify-content:center;}
+.panel{
+  background:var(--bg-white); padding:50px 40px; border-radius:25px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.2); max-width:450px; width:100%;
+  text-align:center; border:3px solid; border-image-slice:1;
+  border-image-source:linear-gradient(90deg,var(--accent),#3AC2BF,#066462);
+  animation: borderAnim 5s linear infinite;
+}
+@keyframes borderAnim {
+  0%{border-image-source:linear-gradient(90deg,var(--accent),#3AC2BF,#066462);}
+  50%{border-image-source:linear-gradient(90deg,#3AC2BF,#066462,var(--accent));}
+  100%{border-image-source:linear-gradient(90deg,var(--accent),#3AC2BF,#066462);}
+}
+.panel h2{margin-bottom:25px;font-size:2rem;color:var(--accent);}
+input{width:100%; padding:12px; border-radius:12px; border:1px solid #d1d5db; margin-bottom:15px; font-size:15px;}
+input:focus{border-color:var(--accent); box-shadow:0 0 8px rgba(58,194,191,0.5); outline:none;}
+.buttons{display:flex; justify-content:center; gap:15px; flex-wrap:wrap; margin-top:15px;}
+.btn{padding:12px 25px; border-radius:12px; font-weight:600; cursor:pointer; min-width:140px; color:white; border:none; background:var(--btn-bg);}
+.btn:hover{transform:scale(1.05); box-shadow:0 6px 15px rgba(0,0,0,0.25);}
+#mensaje{margin-top:15px; font-weight:600; color:#e61212;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
+  <div class="logo">PayPark</div>
+</header>
+
+<div class="side-menu" id="sideMenu">
+  <div class="close-btn" onclick="toggleMenu()">✖</div>
+  <a href="index.html">Inicio</a>
+  <a href="registro.html">Registro</a>
+  <a href="login.html">Login</a>
+  <a href="panel_usuario.html">Panel Usuario</a>
+  <a href="panel_admin.html">Panel Admin</a>
+  <a href="lpr_barreras.html">LPR y Barreras</a>
+</div>
+
+<div id="themeToggle">🌙</div>
+
+<main>
+  <div class="panel">
+    <h2>Panel de Usuario</h2>
+    <input type="text" placeholder="Nombre completo">
+    <input type="email" placeholder="Correo electrónico">
+    <input type="text" placeholder="Placa del vehículo">
+    <div class="buttons">
+      <button class="btn" onclick="alert('Entrada registrada correctamente')">Registrar Entrada</button>
+      <button class="btn" onclick="alert('Pago realizado correctamente')">Realizar Pago</button>
+    </div>
+    <p id="mensaje"></p>
+  </div>
+</main>
+
+<script>
+function toggleMenu(){
+  const menu = document.getElementById('sideMenu');
+  menu.classList.toggle('show');
+  document.querySelector('.hamburger').classList.toggle('active');
+}
+
+// Activar enlace clickeado
+const menuLinks = document.querySelectorAll('#sideMenu a');
+menuLinks.forEach(link => {
+  link.addEventListener('click', ()=>{
+    menuLinks.forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    toggleMenu();
+  });
+});
+
+// Cerrar menú al hacer clic fuera
+window.onclick = function(event){
+  const menu = document.getElementById('sideMenu');
+  const hamburger = document.querySelector('.hamburger');
+  if(!menu.contains(event.target) && !hamburger.contains(event.target)){
+      menu.classList.remove('show');
+      hamburger.classList.remove('active');
+  }
+}
+
+// Modo oscuro
+const themeToggle = document.getElementById('themeToggle');
+themeToggle.addEventListener('click', ()=>{
+  document.body.classList.toggle('dark-theme');
+  themeToggle.textContent = document.body.classList.contains('dark-theme') ? '☀️':'🌙';
+});
+</script>
+
+</body>
+</html>

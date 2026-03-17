@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayPark - Estacionamiento Inteligente</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --accent: #066462;
+  --accent2: #3AC2BF;
+  --bg-light: #FAFAFA;
+  --btn-bg: linear-gradient(90deg,#248786,#0e2425);
+}
+
+/* Base */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Inter', sans-serif; color: var(--text-primary); background: var(--bg-light); overflow-x:hidden; transition:0.3s; }
+body.dark-theme { background:#111827; color:white; }
+
+/* HEADER */
+header{
+  position: fixed;
+  top:0; width:100%; padding:20px 50px;
+  display:flex; align-items:center; justify-content:flex-start;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  box-shadow:0 3px 15px rgba(0,0,0,0.1); z-index:100;
+  border-radius: 0 0 20px 20px;
+}
+
+/* HAMBURGUESA */
+.hamburger{
+  font-size:30px; cursor:pointer; display:flex; flex-direction:column; justify-content:space-around; width:28px; height:22px; margin-right:20px;
+}
+.hamburger div{ height:3px; background:var(--text-primary); border-radius:2px; transition:0.3s; }
+.hamburger.active div:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.active div:nth-child(2){opacity:0;}
+.hamburger.active div:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+/* Side menu con efecto gradiente */
+.side-menu{
+  position:fixed; top:0; left:-280px; width:260px; height:100%;
+  background: rgba(255, 255, 255, 0.8);
+  padding:40px;
+  transition:0.3s; box-shadow:2px 0 15px rgba(0,0,0,0.2); z-index:200;
+  display:flex; flex-direction:column; gap:15px;
+  backdrop-filter: blur(10px);
+  border-radius: 0 20px 20px 0;
+}
+.side-menu.show { left:0; }
+
+.side-menu a {
+  display:block; font-weight:600; font-size:0.95rem; text-decoration:none;
+  color:var(--text-primary); padding:10px 15px; border-radius:8px;
+  background: linear-gradient(90deg,#ffffff,#ffffff); /* fondo inicial blanco */
+  transition:0.3s, transform 0.2s, background 0.3s;
+}
+
+/* Hover */
+.side-menu a:hover{
+  background: var(--btn-bg);
+  color:white;
+  transform: scale(1.02);
+}
+
+/* Opción activa */
+.side-menu a.active {
+  background: var(--btn-bg);
+  color:white;
+  border-left:4px solid var(--accent);
+  border-radius:8px;
+}
+
+/* Botón modo oscuro */
+#themeToggle { position:fixed; top:15px; right:15px; font-size:25px; cursor:pointer; z-index:101; }
+
+/* HERO */
+.cover{
+  margin-top:80px; position:relative; height:70vh;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  text-align:center; color:white;
+  background-image: url('forum.JPEG');
+  background-size: cover; background-position: center;
+}
+.cover .overlay{
+  position:absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.35); z-index:1;
+}
+.cover h1, .cover p, .cover button{ position:relative; z-index:2; }
+.cover h1{ font-size:4rem; margin-bottom:15px; font-family:'Playfair Display',serif; }
+.cover p{ font-size:1.4rem; margin-bottom:25px; max-width:700px; }
+.cover button{
+  background: var(--btn-bg); border:none; color:white; padding:15px 35px;
+  font-size:1.1rem; border-radius:12px; cursor:pointer; transition:0.3s;
+}
+.cover button:hover { transform: scale(1.05); }
+
+/* FORMULARIO CON BORDE ANIMADO */
+.form-container{
+  background:var(--bg-light); padding:50px 30px; border-radius:18px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.1); max-width:540px; margin:50px auto; text-align:center;
+  border:3px solid; border-image-slice:1;
+  border-width:3px;
+  border-image-source: linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));
+  animation: borderAnim 5s linear infinite;
+}
+@keyframes borderAnim{
+  0%{ border-image-source: linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));}
+  50%{ border-image-source: linear-gradient(90deg,var(--accent2),var(--accent),var(--accent2));}
+  100%{ border-image-source: linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));}
+}
+.form-container input{ width:100%; padding:14px; margin:10px 0; border:1px solid #DDD; border-radius:10px; }
+.form-container button{ width:100%; padding:15px; background: var(--btn-bg); border:none; color:white; font-weight:600; border-radius:10px; cursor:pointer; }
+
+/* FOOTER */
+footer{ text-align:center; padding:40px 20px; background:var(--text-primary); color:white; }
+footer a{ color: var(--accent); text-decoration:underline; }
+
+@media(max-width:768px){
+  .cover h1{ font-size:3rem; }
+  .cover p{ font-size:1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- MENÚ LATERAL -->
+<div class="side-menu" id="sideMenu">
+  <div class="close-btn" onclick="toggleMenu()">✖</div>
+  <a href="login.html">Ingresar</a>
+  <a href="#registro">Registro</a>
+  <a href="panel_usuario.html">Panel Usuario</a>
+  <a href="panel_admin.html">Panel Administrador</a>
+</div>
+
+<header>
+  <div class="hamburger" onclick="toggleMenu()"><div></div><div></div><div></div></div>
+</header>
+
+<div id="themeToggle">🌙</div>
+
+<!-- HERO -->
+<section class="cover">
+  <div class="overlay"></div>
+  <h1>Estacionate Inteligentemente con PayPark</h1>
+  <p>Controla tu estacionamiento, paga desde tu móvil y olvida las filas.</p>
+  <button onclick="document.getElementById('registro').scrollIntoView({behavior:'smooth'})">Comenzar</button>
+</section>
+
+<!-- FORMULARIO REGISTRO -->
+<section id="registro">
+  <h2 class="section-title">Regístrate</h2>
+  <div class="form-container">
+    <input type="text" id="nombre" placeholder="Nombre completo">
+    <input type="email" id="email" placeholder="Correo electrónico">
+    <input type="password" id="password" placeholder="Contraseña">
+    <button onclick="registrar()">Crear Cuenta</button>
+    <p id="mensaje"></p>
+  </div>
+</section>
+
+<footer>
+  <p>¿Dudas? Escríbenos a <a href="mailto:soporte@paypark.com">soporte@paypark.com</a></p>
+  <p>PayPark © 2026</p>
+</footer>
+
+<script>
+function toggleMenu(){
+  const menu = document.getElementById("sideMenu");
+  menu.classList.toggle("show");
+  document.querySelector('.hamburger').classList.toggle('active');
+}
+
+// Efecto activo en menú al hacer clic
+const menuLinks = document.querySelectorAll('.side-menu a');
+menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        menuLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        toggleMenu();
+    });
+});
+
+function registrar(){
+  const n=document.getElementById("nombre").value;
+  const e=document.getElementById("email").value;
+  const p=document.getElementById("password").value;
+  document.getElementById("mensaje").textContent = (n && e && p) ? `¡Usuario ${n} registrado!` : "Completa todos los campos";
+}
+
+// Modo oscuro
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark-theme");
+  themeToggle.textContent = document.body.classList.contains("dark-theme") ? "☀️" : "🌙";
+});
+</script>
+</body>
+</html>

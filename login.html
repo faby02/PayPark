@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PayPark - Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --text-primary:#111827;
+  --text-secondary:#4b5563;
+  --accent: #066462;
+  --accent2: #3AC2BF;
+  --bg-light:#FAFAFA;
+  --btn-bg: linear-gradient(90deg,#248786,#0e2425);
+}
+
+/* BASE */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:var(--bg-light);color:var(--text-primary);transition:0.3s;}
+body.dark-theme{background:#111827;color:white;}
+
+/* HEADER */
+header{
+  position:fixed;
+  top:0;width:100%;padding:20px 50px;
+  display:flex;align-items:center;justify-content:flex-start;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  box-shadow:0 3px 15px rgba(0,0,0,0.1);
+  z-index:100;
+  border-radius: 0 0 20px 20px;
+}
+
+/* HAMBURGUESA */
+.hamburger{
+  font-size:30px; cursor:pointer; display:flex; flex-direction:column; justify-content:space-around; width:28px; height:22px; margin-right:20px;
+}
+.hamburger div{ height:3px; background:var(--text-primary); border-radius:2px; transition:0.3s; }
+.hamburger.active div:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
+.hamburger.active div:nth-child(2){opacity:0;}
+.hamburger.active div:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+/* SIDE MENU LATERAL con efecto cuadro blanco y hover */
+.side-menu{
+  position:fixed;
+  top:0; left:-280px;
+  width:260px; height:100%;
+  background: rgba(255,255,255,0.3); /* transparente para ver efecto */
+  padding:40px; display:flex; flex-direction:column; gap:15px;
+  transition:0.3s; box-shadow:2px 0 15px rgba(0,0,0,0.2); z-index:200;
+  backdrop-filter: blur(10px); border-radius:0 20px 20px 0;
+}
+.side-menu.show{left:0;}
+.side-menu a{
+  display:block; font-weight:600; font-size:0.95rem; text-decoration:none;
+  color:var(--text-primary); padding:10px 15px; border-radius:8px;
+  background: linear-gradient(90deg,#ffffff,#ffffff); /* cuadro blanco inicial */
+  transition:0.3s, transform 0.2s, background 0.3s;
+}
+.side-menu a:hover{
+  background: var(--btn-bg);
+  color:white;
+  transform: scale(1.02);
+}
+.side-menu a.active{
+  background: var(--btn-bg);
+  color:white;
+  border-left:4px solid var(--accent);
+  border-radius:8px;
+}
+
+/* CIERRE “X” */
+.side-menu .close-btn{
+  font-size:22px; font-weight:bold; cursor:pointer;
+  position:absolute; top:20px; right:20px; color:var(--text-primary);
+  transition:0.3s;
+}
+.side-menu .close-btn:hover{
+  color:var(--accent);
+}
+
+/* BOTÓN MODO OSCURO */
+#themeToggle{position:fixed; top:15px; right:15px; font-size:25px; cursor:pointer; z-index:101;}
+
+/* PANEL LOGIN */
+main{margin-top:100px;}
+.panel{
+  background:var(--bg-light);
+  padding:50px 40px;
+  border-radius:25px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.2);
+  width:100%; max-width:400px;
+  text-align:center;
+  margin:50px auto;
+  border:3px solid;
+  border-image-slice:1;
+  border-image-source: linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));
+  animation: borderAnim 5s linear infinite;
+}
+@keyframes borderAnim{
+  0%{border-image-source: linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));}
+  50%{border-image-source: linear-gradient(90deg,var(--accent2),var(--accent),var(--accent2));}
+  100%{border-image-source: linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));}
+}
+.panel h2{margin-bottom:20px;font-size:2em;color:var(--accent);}
+.panel input{width:100%;padding:12px;border-radius:12px;border:1px solid #d1d5db;font-size:15px;margin-bottom:15px;transition:0.3s;}
+.panel input:focus{border-color:var(--accent);box-shadow:0 0 8px rgba(58,194,191,0.5);outline:none;}
+.panel button{padding:12px 25px;border-radius:12px;border:none;background:var(--btn-bg);color:white;font-weight:600;cursor:pointer;transition:0.3s;margin-top:10px;width:100%;}
+.panel button:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 6px 15px rgba(0,0,0,0.25);}
+.panel .message{margin-top:15px;font-weight:600;color:red;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hamburger"><div></div><div></div><div></div></div>
+</header>
+
+<!-- MENÚ LATERAL -->
+<div class="side-menu" id="sideMenu">
+  <div class="close-btn" onclick="closeMenu()">✖</div>
+  <a href="index.html">Inicio</a>
+  <a href="registros.html">Registro</a>
+  <a href="panel_usuario.html">Panel Usuario</a>
+  <a href="panel_admin.html">Panel Administrador</a>
+</div>
+
+<div id="themeToggle">🌙</div>
+
+<main>
+  <section class="panel">
+    <h2>Login de Usuario</h2>
+    <input type="email" placeholder="Correo electrónico" id="email">
+    <input type="password" placeholder="Contraseña" id="password">
+    <button onclick="login()">Ingresar</button>
+    <p class="message" id="mensaje"></p>
+  </section>
+</main>
+
+<script>
+const menu = document.getElementById("sideMenu");
+const hamburger = document.querySelector(".hamburger");
+
+hamburger.addEventListener('click', ()=>{ openMenu(); });
+
+function openMenu(){
+  menu.classList.add("show");
+  hamburger.classList.add("active");
+}
+function closeMenu(){
+  menu.classList.remove("show");
+  hamburger.classList.remove("active");
+}
+
+// Efecto activo en menú
+const menuLinks = document.querySelectorAll('.side-menu a');
+menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        menuLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        closeMenu();
+    });
+});
+
+// Login simulado
+function login(){
+  const email=document.getElementById('email').value;
+  const password=document.getElementById('password').value;
+  const msg=document.getElementById('mensaje');
+  if(email && password){
+    msg.style.color='green';
+    msg.textContent=`¡Login correcto para ${email}!`;
+  } else {
+    msg.style.color='red';
+    msg.textContent='Completa todos los campos';
+  }
+}
+
+// Modo oscuro
+const themeToggle = document.getElementById("themeToggle");
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark-theme");
+  themeToggle.textContent = document.body.classList.contains("dark-theme") ? "☀️" : "🌙";
+});
+</script>
+
+</body>
+</html>
