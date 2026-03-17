@@ -39,7 +39,7 @@ header{
 .hamburger.active div:nth-child(2){opacity:0;}
 .hamburger.active div:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
 
-/* Side menu con efecto gradiente */
+/* Side menu */
 .side-menu{
   position:fixed; top:0; left:-260px; width:260px; height:100%;
   background: rgba(255, 255, 255, 0.8);
@@ -50,23 +50,17 @@ header{
   border-radius: 0 20px 20px 0;
 }
 .side-menu.show { left:0; }
-
-/* Botones del menú */
 .side-menu a {
   display:block; font-weight:600; font-size:0.95rem; text-decoration:none;
   color:var(--text-primary); padding:10px 15px; border-radius:8px;
-  background: linear-gradient(90deg,#ffffff,#ffffff); /* fondo blanco */
+  background: linear-gradient(90deg,#ffffff,#ffffff);
   transition:0.3s, transform 0.2s, background 0.3s;
 }
-
-/* Hover */
 .side-menu a:hover{
   background: var(--btn-bg);
   color:white;
   transform: scale(1.02);
 }
-
-/* Activo */
 .side-menu a.active {
   background: var(--btn-bg);
   color:white;
@@ -115,20 +109,27 @@ main{
 }
 
 /* Botones principales panel */
+.button-container{
+  display:flex;
+  justify-content:space-between;
+  margin-top:20px;
+  gap:10px;
+}
 .btn{
-  padding:12px 20px;
-  margin:10px auto;
+  flex:1;
+  padding:10px 0;
   border-radius:12px;
   font-weight:600;
   cursor:pointer;
-  width:180px; /* ancho fijo más pequeño */
-  display:block;
   border:none;
   background: var(--btn-bg);
   color:white;
+  font-size:1rem;
   transition:0.3s;
 }
-.btn:hover{transform:scale(1.05);}
+.btn:hover{
+  transform:scale(1.05);
+}
 </style>
 </head>
 <body>
@@ -154,10 +155,11 @@ main{
 <main>
   <div class="panel">
     <h2>Panel Administrador</h2>
-    <p></p>
     <p>Desde aquí puedes gestionar tarifas, generar tickets, revisar pagos, controlar actividad y acceder al perfil.</p>
-    <button class="btn" onclick="alert('Funcionalidad de ejemplo')">Gestionar Usuarios</button>
-    <button class="btn" onclick="alert('Funcionalidad de ejemplo')">Ver Reportes</button>
+    <div class="button-container">
+      <button class="btn" onclick="alert('Funcionalidad de ejemplo')">Gestionar Usuarios</button>
+      <button class="btn" onclick="alert('Funcionalidad de ejemplo')">Ver Reportes</button>
+    </div>
   </div>
 </main>
 

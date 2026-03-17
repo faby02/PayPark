@@ -16,8 +16,17 @@
 }
 
 /* BODY */
-body{margin:0;font-family:'Inter',sans-serif;background:var(--bg-light);color:var(--text-primary);transition:0.3s;}
-body.dark{background:#111827;color:white;}
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:var(--bg-light);
+  color:var(--text-primary);
+  transition:0.3s;
+}
+body.dark{
+  background:#111827;
+  color:white;
+}
 
 /* HEADER */
 header{
@@ -148,20 +157,37 @@ main{
 .panel p{
   margin-bottom:15px;
 }
+
+/* Botones centrados pero separados */
+.btn-container{
+  display: flex;
+  justify-content: center; /* centra todo el contenedor */
+  gap: 60px; /* separa los botones entre sí */
+  margin-top: 20px;
+}
+
+/* Botones */
 .btn{
   padding:12px 25px;
-  margin:5px auto;
   border-radius:12px;
   font-weight:600;
   cursor:pointer;
-  min-width:100%;
-  display:inline-block;
+  min-width:120px;
+  max-width:200px;
   border:none;
   background: var(--btn-bg);
   color:white;
   transition:0.3s;
 }
 .btn:hover{transform:scale(1.05);}
+
+/* Responsive móvil */
+@media(max-width:480px){
+  .btn-container{
+    flex-direction: column;
+    gap:15px;
+  }
+}
 </style>
 </head>
 <body>
@@ -183,10 +209,15 @@ main{
 <main>
   <div class="panel">
     <h2>Panel de Usuario</h2>
-    <p>Bienvenido al panel de usuario.</p>
+    <p></p>
     <p>Aquí podrás ver tus datos, tus pagos y tu historial de estacionamientos.</p>
-    <button class="btn" onclick="alert('Funcionalidad de ejemplo')">Ver historial</button>
-    <button class="btn" onclick="alert('Funcionalidad de ejemplo')">Editar perfil</button>
+    
+    <!-- Botones centrados y separados -->
+    <div class="btn-container">
+      <button class="btn" onclick="alert('Funcionalidad de ejemplo')">Ver historial</button>
+      <button class="btn" onclick="alert('Funcionalidad de ejemplo')">Editar perfil</button>
+    </div>
+    
   </div>
 </main>
 
@@ -220,5 +251,4 @@ themeToggle.addEventListener('click', ()=>{
 
 </body>
 </html>
-   
 
